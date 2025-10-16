@@ -3,13 +3,29 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ModeToggle } from '@/components/mode-toggle' 
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
+import { Highlighter } from "@/components/ui/highlighter"
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline' 
+import { Play, SkipBack, SkipForward } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { BorderBeam } from "@/components/ui/border-beam"
+import { LightRays } from "@/components/ui/light-rays"
+import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern"
+import { RetroGrid } from "@/components/ui/retro-grid"
+import { WarpBackground } from "@/components/ui/warp-background"
 
 const navigation = [
   { name: 'Home', href: '#' },
-  { name: 'About', href: '#' },
-  { name: 'Projects', href: '#' },
+  { name: 'About', href: '#about' },
+  { name: 'Projects', href: '#projects' },
   { name: 'Contact', href: '#' },
 ]
 
@@ -18,11 +34,12 @@ export default function Example() {
 
   return (
    <div className="min-h-screen transition-colors bg-background text-foreground">
+    <RetroGrid />
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1"></div>
           <div className="flex lg:hidden">
-            <ModeToggle />
+            <AnimatedThemeToggler />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -40,7 +57,7 @@ export default function Example() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <ModeToggle />
+            <AnimatedThemeToggler />
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -105,20 +122,7 @@ export default function Example() {
             <p className="mt-8 text-lg font-medium text-pretty text-foreground sm:text-xl/8">
               A Full-Stack Engineer turning ideas into polished Mobile & modern Web Apps.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-10">
-              <a
-                href="#"
-                className="group inline-flex items-center gap-2 rounded-md bg-ring px-3.5 py-2.5
-                          text-sm font-semibold text-primary-foreground hover:bg-ring/50 shadow-xs focus-visible:outline-2
-                          focus-visible:outline-offset-2 focus-visible:outline-ring"
-              >
-              <span className="leading-none hover:zoom-out-95 ">Download Resume</span>
-              <ArrowDownTrayIcon
-                aria-hidden="true"
-                className="size-5 leading-none transition-transform"
-              />
-            </a>
-          </div>
+
         </div>
         </div>
         <div
@@ -135,16 +139,45 @@ export default function Example() {
         </div>
       </div>
 
-      <section id="about" className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
-  <h2 className="text-2xl font-semibold tracking-tight">About</h2>
-  <p className="mt-4 text-foreground/80">
-    Short intro about you…
-  </p>
+      <section
+  id="about"
+  className="mx-auto max-w-7xl px-6 py-10 lg:py-16">
+    
+  <div className="min-h-screen flex items-center justify-center">
+    <WarpBackground beamsPerSide={0}>
+
+      <Card className="relative w-full max-w-[960px] mx-auto overflow-hidden shadow-xl ">
+      <CardHeader className="text-center">
+        <CardTitle className="text-3xl font-semibold">About Me</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p className="mt-4 text-foreground/80 leading-relaxed">
+          My name is Syeda Hafsa Anis, I am a recent Computer Engineering graduate of Ghulam Ishaq Khan Institute (GIKI), with expertise in Software Development (Web/Mobile), DevOps and Artificial Intelligence. Proven skills in designing and implementing robust solutions using a diverse set of technologies. Eager to contribute innovative ideas and technical proficiency to dynamic projects in the field of technology. Demonstrates strong leadership and communication skills through active collaboration with cross-functional teams
+        </p>
+      </CardContent>
+      <BorderBeam
+        duration={6}
+        size={400}
+        className="from-transparent via-ring to-transparent"
+      />
+      <BorderBeam
+        duration={6}
+        delay={3}
+        size={400}
+        borderWidth={2}
+        className="from-transparent via-sidebar-ring to-transparent"
+      />
+    </Card>
+
+    </WarpBackground>
+  </div>
 </section>
+
 
 <section id="projects" className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
   <h2 className="text-2xl font-semibold tracking-tight">Projects</h2>
-  {/* your project cards go here */}
+  your project cards go here
 </section>
     </div>
   )
