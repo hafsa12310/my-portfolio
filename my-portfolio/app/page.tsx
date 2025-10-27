@@ -1,6 +1,5 @@
 'use client'
 
-import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler'
 import { AuroraText } from "@/components/ui/aurora-text"
 import { Timeline } from '@/components/ui/timeline';
 import { useState, useEffect } from "react";
@@ -19,6 +18,7 @@ import { IconCloud } from "@/components/ui/icon-cloud"
 import { ShinyButton } from "@/components/ui/shiny-button"
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
+import ScrollToTop from '@/components/ui/scroll-to-top'
 import {
   SiJavascript,
   SiPython,
@@ -35,13 +35,15 @@ import {
   SiMariadb,
   SiCplusplus,
   SiIntellijidea
+  ,SiGithub
 } from 'react-icons/si'
+import { FiDownload } from 'react-icons/fi'
 
 
 export default function Example() {
   
 
-  const data = [
+  const data = [ 
     {
       title: "Oct 2024 - Present",
       content: (
@@ -104,17 +106,13 @@ export default function Example() {
     },
   ];
 
-// const images = slugs.map((slug) => `https://cdn.simpleicons.org/${slug}/${slug}`);
-
-  // responsive icon cloud size (CSS pixels)
-  // Adjusted to be slightly smaller to match your request
   const [cloudSize, setCloudSize] = useState(520)
   useEffect(() => {
     function update() {
       const w = window.innerWidth
-      if (w < 640) setCloudSize(300) // mobile
-      else if (w < 1024) setCloudSize(520) // tablet
-      else setCloudSize(720) // desktop
+      if (w < 640) setCloudSize(300) 
+      else if (w < 1024) setCloudSize(520) 
+      else setCloudSize(720) 
     }
     update()
     window.addEventListener("resize", update)
@@ -135,6 +133,27 @@ export default function Example() {
           <p className="mt-8 text-lg sm:text-xl font-medium">
             A Full-Stack Engineer turning ideas into polished Mobile & modern Web Apps.
           </p>
+          {/* Hero CTAs: GitHub and CV */}
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <ShinyButton
+              className="px-4 py-2 text-sm"
+              onClick={() => window.open('https://github.com/hafsa12310', '_blank')}
+            >
+              <span className="flex items-center gap-2">
+                <SiGithub size={18} />
+                <span>View my GitHub</span>
+              </span>
+            </ShinyButton>
+
+            <a href="/Syeda Hafsa Anis_CV.pdf" download className="inline-block">
+              <ShinyButton className="px-4 py-2 text-sm">
+                <span className="flex items-center gap-2">
+                  <FiDownload size={18} />
+                  <span>Download CV</span>
+                </span>
+              </ShinyButton>
+            </a>
+          </div>
         </div>
       </main>
 
@@ -146,7 +165,7 @@ export default function Example() {
     </h1>
 
     <Card className="relative mt-6 w-full max-w-[1000px] mx-auto overflow-hidden py-4">
-      <CardContent className="text-base md:text-lg leading-relaxed">My name is Syeda Hafsa Anis,, I am a recent Computer Engineering graduate of Ghulam Ishaq Khan Institute (GIKI), with expertise in Software Development (Web/Mobile), DevOps and Artificial Intelligence. Proven skills in designing and implementing robust solutions using a diverse set of technologies. Eager to contribute innovative ideas and technical proficiency to dynamic projects in the field of technology. Demonstrates strong leadership and communication skills through active collaboration with cross-functional teams.</CardContent>
+      <CardContent className="text-base md:text-lg leading-relaxed">I’m Syeda Hafsa Anis, a GIKI Computer Engineering grad experienced in Web/Mobile, DevOps, and AI. I focus on building reliable features, tightening performance, and taking solutions from prototype to production. I work best in collaborative teams, keep feedback loops short, and stay curious—adopting new tools and practices when they make the product faster, safer, or more user-friendly.</CardContent>
       <CardFooter className="flex justify-between" />
       <BorderBeam duration={8} size={100} />
     </Card>
@@ -422,6 +441,10 @@ export default function Example() {
           </p>
         </footer>
       </div>
+      {/* Scroll-to-top button */}
+      <ScrollToTop />
     </div>
   );
 }
+
+
