@@ -54,13 +54,21 @@ export function IconCloud({ icons, images, size: propSize }: IconCloudProps) {
     const items = icons || images || []
     imagesLoadedRef.current = new Array(items.length).fill(false)
 
+    const ICON_CANVAS_BASE = 64
     const newIconCanvases = items.map((item, index) => {
+      // Make per-icon offscreen canvas size scale with the cloud size and device pixel ratio
+      const iconCanvasSize = Math.max(40, Math.round(ICON_CANVAS_BASE * sizeScale * dpr))
       const offscreen = document.createElement("canvas")
-      offscreen.width = 40
-      offscreen.height = 40
+      offscreen.width = iconCanvasSize
+      offscreen.height = iconCanvasSize
       const offCtx = offscreen.getContext("2d")
 
       if (offCtx) {
+        offCtx.imageSmoothingEnabled = true
+        // prefer high quality when scaling SVG/raster
+        // @ts-ignore imageSmoothingQuality is supported in browsers
+        offCtx.imageSmoothingQuality = "high"
+
         if (images) {
           // Handle image URLs directly
           const img = new Image()
@@ -70,25 +78,26 @@ export function IconCloud({ icons, images, size: propSize }: IconCloudProps) {
             offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
 
             // Create circular clipping path
+            const r = iconCanvasSize / 2
             offCtx.beginPath()
-            offCtx.arc(20, 20, 20, 0, Math.PI * 2)
+            offCtx.arc(r, r, r, 0, Math.PI * 2)
             offCtx.closePath()
             offCtx.clip()
 
-            // Draw the image
-            offCtx.drawImage(img, 0, 0, 40, 40)
+            // Draw the image full-size into the offscreen canvas
+            offCtx.drawImage(img, 0, 0, offscreen.width, offscreen.height)
 
             imagesLoadedRef.current[index] = true
           }
         } else {
-          // Handle SVG icons
-          offCtx.scale(0.4, 0.4)
+          // Handle SVG icons by rendering them to an image and drawing at high resolution
           const svgString = renderToString(item as React.ReactElement)
           const img = new Image()
           img.src = "data:image/svg+xml;base64," + btoa(svgString)
           img.onload = () => {
             offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
-            offCtx.drawImage(img, 0, 0)
+            // Draw the SVG into the full high-res offscreen canvas
+            offCtx.drawImage(img, 0, 0, offscreen.width, offscreen.height)
             imagesLoadedRef.current[index] = true
           }
         }
