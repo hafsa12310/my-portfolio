@@ -3,6 +3,7 @@
 import { AuroraText } from "@/components/ui/aurora-text"
 import { Timeline } from '@/components/ui/timeline';
 import { useState, useEffect } from "react";
+import { motion } from 'motion/react'
 import Navbar from '@/components/navbar';
 import { BorderBeam } from "@/components/ui/border-beam"
 import {
@@ -36,6 +37,7 @@ import {
   SiCplusplus,
   SiIntellijidea
   ,SiGithub
+  ,SiLinkedin
 } from 'react-icons/si'
 import { FiDownload } from 'react-icons/fi'
 
@@ -43,14 +45,12 @@ import { FiDownload } from 'react-icons/fi'
 export default function Example() {
   
 
-  const data = [ 
+  const data = [
     {
       title: "Oct 2024 - Present",
       content: (
         <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
-            Unikrew Solutions
-          </p>
+          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Unikrew Solutions</p>
           <p className="mb-4 text-sm md:text-base text-foreground">Full Stack Engineer</p>
           <div className="grid grid-cols-2 gap-4">
             <ul className="list-disc pl-5 space-y-2 text-left">
@@ -69,9 +69,7 @@ export default function Example() {
       title: "July 2024 - Oct 2024",
       content: (
         <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
-            Sarmaaya Financials
-          </p>
+          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Sarmaaya Financials</p>
           <p className="mb-4 text-sm md:text-base text-foreground">Backend Developer</p>
           <div className="grid grid-cols-2 gap-4">
             <ul className="list-disc pl-5 space-y-2 text-left">
@@ -79,7 +77,7 @@ export default function Example() {
                 Developed a scalable, efficient backend for a fintech app using Node.js and NestJS.
               </li>
               <li>
-               Created a reusable NestJS package library to streamline code sharing across projects.
+                Created a reusable NestJS package library to streamline code sharing across projects.
               </li>
             </ul>
           </div>
@@ -90,9 +88,7 @@ export default function Example() {
       title: "June 2023 - Aug 2023",
       content: (
         <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
-            Pakistan Civil Aviation Authority
-          </p>
+          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Pakistan Civil Aviation Authority</p>
           <p className="mb-4 text-sm md:text-base text-foreground">Software Engineering Intern</p>
           <div className="grid grid-cols-2 gap-4">
             <ul className="list-disc pl-5 space-y-2 text-left">
@@ -123,6 +119,11 @@ export default function Example() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <Navbar />
+      <motion.div
+        initial={{ opacity: 0, y: 10, scale: 0.997 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ type: 'spring', stiffness: 180, damping: 14, mass: 0.6 }}
+      >
 
       {/* Main content */}
       <main className="pt-24 px-6 flex items-center justify-center">
@@ -141,7 +142,17 @@ export default function Example() {
             >
               <span className="flex items-center gap-2">
                 <SiGithub size={18} />
-                <span>View my GitHub</span>
+                <span>GitHub</span>
+              </span>
+            </ShinyButton>
+
+            <ShinyButton
+              className="px-4 py-2 text-sm"
+              onClick={() => window.open('https://www.linkedin.com/in/syedahafsaanis/', '_blank')}
+            >
+              <span className="flex items-center gap-2">
+                <SiLinkedin size={18} />
+                <span>LinkedIn</span>
               </span>
             </ShinyButton>
 
@@ -164,9 +175,9 @@ export default function Example() {
       About
     </h1>
 
-    <Card className="relative mt-6 w-full max-w-[1000px] mx-auto overflow-hidden py-4">
-      <CardContent className="text-base md:text-lg leading-relaxed">I’m Syeda Hafsa Anis, a GIKI Computer Engineering grad experienced in Web/Mobile, DevOps, and AI. I focus on building reliable features, tightening performance, and taking solutions from prototype to production. I work best in collaborative teams, keep feedback loops short, and stay curious—adopting new tools and practices when they make the product faster, safer, or more user-friendly.</CardContent>
-      <CardFooter className="flex justify-between" />
+    <Card className="relative mt-6 p-10 w-full max-w-[1000px] mx-auto overflow-hidden">
+      <CardContent className="text-base md:text-lg leading-relaxed">I’m Syeda Hafsa Anis, a GIKI Computer Engineering graduate experienced in Web/Mobile, DevOps, and AI. I focus on building reliable features, tightening performance, and taking solutions from prototype to production. I work best in collaborative teams, keep feedback loops short, and stay curious—adopting new tools and practices when they make the product faster, safer, or more user-friendly.</CardContent>
+      {/* <CardFooter className="flex justify-between" /> */}
       <BorderBeam duration={8} size={100} />
     </Card>
   </div>
@@ -226,7 +237,7 @@ export default function Example() {
             {/* View source button (replace URL with actual repo) */}
             <div className="mt-3">
               <InteractiveHoverButton
-                className="mx-auto px-4 py-2 text-xs md:text-sm"
+                className="text-xs md:text-sm"
                 onClick={() => window.open('https://github.com/hafsa12310/Book-Blog', '_blank')}
               >
                 View source
@@ -252,7 +263,7 @@ export default function Example() {
             {/* View source button (replace URL with actual repo) */}
             <div className="mt-3">
               <InteractiveHoverButton
-                className="mx-auto px-4 py-2 text-xs md:text-sm"
+                className="text-xs md:text-sm"
                 onClick={() => window.open('https://github.com/hafsa12310/HR-Salary-Slip-Portal', '_blank')}
               >
                 View source
@@ -279,7 +290,7 @@ export default function Example() {
 
             <div className="mt-3">
               <InteractiveHoverButton
-                className="mx-auto px-4 py-2 text-xs md:text-sm"
+                className="text-xs md:text-sm"
                 onClick={() => window.open('https://github.com/hafsa12310/Library-Management-System', '_blank')}
               >
                 View source
@@ -443,7 +454,8 @@ export default function Example() {
       </div>
       {/* Scroll-to-top button */}
       <ScrollToTop />
-    </div>
+    </motion.div>
+  </div>
   );
 }
 
