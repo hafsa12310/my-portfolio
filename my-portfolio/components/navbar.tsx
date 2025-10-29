@@ -41,6 +41,7 @@ import { link } from "fs"
 const navigationLinks = [
   { link: "#", label: "Home", icon: HomeIcon, active: true },
   { link: "#projects", label: "Projects", icon: LayersIcon },
+  { link: "#technologies", label: "Technologies", icon: GlobeIcon },
   { link: "#work-experience", label: "Experience", icon: FileTextIcon },
   { link: "#contact", label: "Contact", icon: UsersIcon },
 ]
