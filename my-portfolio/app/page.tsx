@@ -1,462 +1,78 @@
-'use client'
+"use client"
 
-import { AuroraText } from "@/components/ui/aurora-text"
-import { Timeline } from '@/components/ui/timeline';
-import { useState, useEffect } from "react";
-import { motion } from 'motion/react'
-import Navbar from '@/components/navbar';
-import { BorderBeam } from "@/components/ui/border-beam"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { MagicCard } from "@/components/ui/magic-card"
-import { IconCloud } from "@/components/ui/icon-cloud"
-import { ShinyButton } from "@/components/ui/shiny-button"
-import { TypewriterEffect } from '@/components/ui/typewriter-effect';
-import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
-import ScrollToTop from '@/components/ui/scroll-to-top'
-import {
-  SiJavascript,
-  SiPython,
-  SiTensorflow,
-  SiTypescript,
-  SiReact,
-  SiDocker,
-  SiAmazon,
-  SiTailwindcss,
-  SiNestjs,
-  SiNextdotjs,
-  SiHuggingface,
-  SiApachecassandra,
-  SiMariadb,
-  SiCplusplus,
-  SiIntellijidea
-  ,SiGithub
-  ,SiLinkedin
-} from 'react-icons/si'
-import { FiDownload } from 'react-icons/fi'
+import { motion } from "motion/react"
+import { ArrowDownRight, ArrowUpRight, Award, Download, Github, GraduationCap, Linkedin, Mail, MapPin, Sparkles } from "lucide-react"
+import Navbar from "@/components/navbar"
+import ScrollToTop from "@/components/ui/scroll-to-top"
 
+const experience = [
+  { period: "Oct 2024 — Present", company: "Unikrew Solutions", location: "Karachi, Pakistan", role: "Full Stack Developer", points: ["Deploy and maintain production-grade applications with TypeScript, Node.js, NestJS, React and Next.js, building REST APIs, reusable components and database-driven workflows.", "Deliver complex digital onboarding flows spanning KYC, biometric verification, OTP, third-party APIs, retry handling and persistent server-driven workflow state.", "Use RabbitMQ for reliable asynchronous message processing across distributed application components."] },
+  { period: "Jun 2024 — Oct 2024", company: "Sarmaaya Financials", location: "Islamabad, Pakistan", role: "Backend Developer", points: ["Developed and maintained backend functionality and RESTful APIs for a fintech application using Node.js, NestJS and databases.", "Integrated real-time Pakistan Stock Exchange data while collaborating with frontend and product teams to deliver and troubleshoot production features."] },
+  { period: "Jun 2023 — Aug 2023", company: "Pakistan Civil Aviation Authority", location: "Karachi, Pakistan", role: "IT / Software Engineering Intern", points: ["Automated the Lost and Found Items System by developing more than three website modules with the MERN stack."] },
+]
 
-export default function Example() {
-  
+const projects = [
+  { number: "01", title: "HookRelay", label: "Event-driven webhook delivery", description: "An asynchronous producer-consumer system with retries, failure recovery, the Outbox pattern and idempotent processing. Redis sliding-window rate limiting protects downstream services and controls traffic.", tags: ["TypeScript", "NestJS", "Kafka", "Redis", "PostgreSQL", "Docker"], accent: "from-cyan-500/20 via-sky-400/10 to-transparent", repo: "https://github.com/hafsa12310/hook-relay" },
+  { number: "02", title: "HireAI", label: "AI resume matching", description: "A full-stack resume and job-description matching application with a responsive multi-step interface, document parsing, structured API responses and IBM watsonx.ai-powered match scores, skill-gap analysis and interview questions.", tags: ["React", "TypeScript", "Flask", "IBM watsonx.ai"], accent: "from-rose-500/20 via-pink-400/10 to-transparent", repo: "https://github.com/hafsa12310/HireAI" },
+  { number: "03", title: "IntelliDent", label: "Final year project · Healthcare AI", description: "Built with Aga Khan University Hospital, this orthodontics web application adapts deep-learning models for tooth classification and segmentation using a dataset of 1,000 panoramic dental X-rays.", tags: ["Python", "Flask", "React", ".NET", "TensorFlow", "Firebase"], accent: "from-violet-500/20 via-fuchsia-400/10 to-transparent" },
+  { number: "04", title: "Client Project Management System", label: "Full-stack business operations", description: "A centralized client project management system for maintaining client records, tracking onboarding and interactions, managing projects, and organizing day-to-day workflows through a responsive, database-driven interface.", tags: ["React", "TypeScript", "Node.js", "NestJS", "PostgreSQL"], accent: "from-amber-500/20 via-orange-400/10 to-transparent", repo: "https://github.com/hafsa12310/client-projects-management-system" },
+]
 
-  const data = [
-    {
-      title: "Oct 2024 - Present",
-      content: (
-        <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Unikrew Solutions</p>
-          <p className="mb-4 text-sm md:text-base text-foreground">Full Stack Engineer</p>
-          <div className="grid grid-cols-2 gap-4">
-            <ul className="list-disc pl-5 space-y-2 text-left">
-              <li>
-                Contributed to the <strong>Cascade</strong> web app (React): built reusable components, implemented routing and API integration, and improved performance, responsiveness, and accessibility across key flows.
-              </li>
-              <li>
-                Built <strong>Al Baraka Bank’s</strong> digital onboarding app in Flutter: translated Figma to production screens, implemented multi-step KYC/OTP flows, integrated required SDKs/APIs, and optimized the end-to-end user experience.
-              </li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "July 2024 - Oct 2024",
-      content: (
-        <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Sarmaaya Financials</p>
-          <p className="mb-4 text-sm md:text-base text-foreground">Backend Developer</p>
-          <div className="grid grid-cols-2 gap-4">
-            <ul className="list-disc pl-5 space-y-2 text-left">
-              <li>
-                Developed a scalable, efficient backend for a fintech app using Node.js and NestJS.
-              </li>
-              <li>
-                Created a reusable NestJS package library to streamline code sharing across projects.
-              </li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "June 2023 - Aug 2023",
-      content: (
-        <div>
-          <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">Pakistan Civil Aviation Authority</p>
-          <p className="mb-4 text-sm md:text-base text-foreground">Software Engineering Intern</p>
-          <div className="grid grid-cols-2 gap-4">
-            <ul className="list-disc pl-5 space-y-2 text-left">
-              <li>
-                Automated the Lost and Found Items System by developing over 3 modules of the website using the MERN stack.
-              </li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-  ];
+const skillGroups = [
+  { title: "Languages", skills: ["TypeScript", "JavaScript", "Python", "Dart", "Java", "SQL", "C / C++"] },
+  { title: "Backend", skills: ["Node.js", "NestJS", "Express.js", "Flask", "Django", "REST APIs"] },
+  { title: "Frontend", skills: ["React.js", "Next.js", "Flutter", "Tailwind CSS"] },
+  { title: "Distributed systems & data", skills: ["Kafka", "Redis", "RabbitMQ", "PostgreSQL", "MongoDB", "MySQL", "CassandraDB"] },
+  { title: "Cloud & DevOps", skills: ["Docker", "AWS", "CI/CD", "Git", "Vercel", "Render", "Cloudflare"] },
+  { title: "Testing & tools", skills: ["Postman", "Git", "Insomnia"] },
+]
 
-  const [cloudSize, setCloudSize] = useState(520)
-  useEffect(() => {
-    function update() {
-      const w = window.innerWidth
-      if (w < 640) setCloudSize(300) 
-      else if (w < 1024) setCloudSize(520) 
-      else setCloudSize(720) 
-    }
-    update()
-    window.addEventListener("resize", update)
-    return () => window.removeEventListener("resize", update)
-  }, [])
+const certificates = [
+  "Develop Generative AI Applications: Get Started — Coursera",
+  "AWS Cloud Technical Essentials — Amazon Web Services",
+]
 
+const reveal = { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-80px" }, transition: { duration: 0.6, ease: "easeOut" as const } }
+
+export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
+    <div className="min-h-screen overflow-hidden bg-background text-foreground">
       <Navbar />
-      <motion.div
-        initial={{ opacity: 0, y: 10, scale: 0.997 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ type: 'spring', stiffness: 180, damping: 14, mass: 0.6 }}
-      >
-
-      {/* Main content */}
-      <main className="pt-24 px-6 flex items-center justify-center">
-        <div className="relative max-w-3xl pt-30 text-center">
-          <h1 className="pointer-events-none text-6xl sm:text-7xl font-semibold leading-none">
-            <AuroraText speed={2} colors={["#8a79ab", "#dfd9ec", "#e6a5b8", "#8a79ab"]}>Hi, I am Hafsa Anis</AuroraText>
-          </h1>
-          <p className="mt-8 text-lg sm:text-xl font-medium">
-            A Full-Stack Engineer turning ideas into polished Mobile & modern Web Apps.
-          </p>
-          {/* Hero CTAs: GitHub and CV */}
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <ShinyButton
-              className="px-4 py-2 text-sm"
-              onClick={() => window.open('https://github.com/hafsa12310', '_blank')}
-            >
-              <span className="flex items-center gap-2">
-                <SiGithub size={18} />
-                <span>GitHub</span>
-              </span>
-            </ShinyButton>
-
-            <ShinyButton
-              className="px-4 py-2 text-sm"
-              onClick={() => window.open('https://www.linkedin.com/in/syedahafsaanis/', '_blank')}
-            >
-              <span className="flex items-center gap-2">
-                <SiLinkedin size={18} />
-                <span>LinkedIn</span>
-              </span>
-            </ShinyButton>
-
-            <a href="/Syeda Hafsa Anis_CV.pdf" download className="inline-block">
-              <ShinyButton className="px-4 py-2 text-sm">
-                <span className="flex items-center gap-2">
-                  <FiDownload size={18} />
-                  <span>Download CV</span>
-                </span>
-              </ShinyButton>
-            </a>
+      <main>
+        <section id="home" className="relative flex min-h-[92vh] items-center pt-24">
+          <div className="hero-grid absolute inset-0 opacity-60" /><div className="hero-glow absolute left-1/2 top-24 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full" />
+          <div className="relative mx-auto w-full max-w-7xl px-6 py-20 lg:px-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
+              <div className="mb-8 flex items-center gap-3 text-sm font-medium text-muted-foreground"><span className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card"><Sparkles className="h-3.5 w-3.5 text-primary" /></span><span>Full-stack developer · Karachi, Pakistan</span></div>
+              <div className="grid items-end gap-10 lg:grid-cols-[1fr_280px]">
+                <div><p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-primary">Hello, I’m Syeda Hafsa Anis</p><h1 className="max-w-5xl text-[clamp(3.5rem,9vw,8.5rem)] font-semibold leading-[0.87] tracking-[-0.07em]">I build digital products that <span className="text-gradient">work beautifully.</span></h1></div>
+                <p className="max-w-sm pb-2 text-base leading-7 text-muted-foreground lg:text-lg">From polished interfaces to dependable backends, I turn complex product ideas into fast, thoughtful web and mobile experiences.</p>
+              </div>
+              <div className="mt-12 flex flex-wrap items-center gap-3">
+                <a href="#projects" className="button-primary">Explore my work <ArrowDownRight className="h-4 w-4" /></a>
+                <a href="/Syeda Hafsa Anis_CV.pdf" download className="button-secondary"><Download className="h-4 w-4" /> Download résumé</a>
+                <div className="ml-0 flex gap-2 sm:ml-2"><a className="icon-button" href="https://github.com/hafsa12310" target="_blank" rel="noreferrer" aria-label="GitHub"><Github className="h-5 w-5" /></a><a className="icon-button" href="https://www.linkedin.com/in/syedahafsaanis/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a></div>
+              </div>
+            </motion.div>
           </div>
-        </div>
+        </section>
+
+        <section id="about" className="section-shell scroll-mt-24"><motion.div {...reveal} className="grid gap-10 border-y border-border py-16 lg:grid-cols-[0.7fr_1.3fr] lg:py-24"><SectionLabel number="01" title="About" /><div><p className="text-balance text-3xl font-medium leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl">Engineering with a product mindset—clear thinking, careful details, and no gap between idea and execution.</p><div className="mt-10 grid gap-8 text-base leading-7 text-muted-foreground sm:grid-cols-2"><p>I’m a GIKI Computer Engineering graduate building production-grade web products, distributed backend services and AI-enabled experiences.</p><p>My work spans reusable frontends, REST APIs, database-driven workflows, real-time data and reliable asynchronous processing.</p></div><div className="mt-10 flex flex-wrap gap-6 border-t border-border pt-8"><Stat value="4" label="Featured projects" /><Stat value="3" label="Industry roles" /><Stat value="Web · Systems · AI" label="Core focus" /></div></div></motion.div></section>
+
+        <section id="projects" className="section-shell scroll-mt-24 py-24 lg:py-32"><motion.div {...reveal}><div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><SectionLabel number="02" title="Selected work" /><p className="max-w-md text-sm leading-6 text-muted-foreground">A selection of systems spanning event-driven infrastructure, business operations, AI-assisted recruitment, and healthcare machine learning.</p></div><div className="grid gap-4 lg:grid-cols-2">{projects.map((project) => <article key={project.title} className="project-card group"><div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`} /><div className="relative flex h-full flex-col"><div className="flex items-start justify-between"><span className="font-mono text-xs text-muted-foreground">{project.number}</span>{project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="project-link" aria-label={`View ${project.title} on GitHub`} title="View repository on GitHub"><Github className="h-4 w-4" /></a>}</div><div className="mt-20"><p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{project.label}</p><h3 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">{project.title}</h3><p className="mt-5 max-w-xl leading-7 text-muted-foreground">{project.description}</p></div><div className="mt-8 flex flex-wrap gap-2">{project.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}</div>{project.repo && <a href={project.repo} target="_blank" rel="noreferrer" className="mt-8 inline-flex w-fit items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-primary">View on GitHub <ArrowUpRight className="h-4 w-4" /></a>}</div></article>)}</div></motion.div></section>
+
+        <section id="experience" className="section-shell scroll-mt-24 border-t border-border py-24 lg:py-32"><motion.div {...reveal} className="grid gap-12 lg:grid-cols-[0.65fr_1.35fr]"><div><SectionLabel number="03" title="Experience" /><p className="mt-8 max-w-xs text-sm leading-6 text-muted-foreground">Building customer-facing products and the systems behind them.</p></div><div className="divide-y divide-border border-y border-border">{experience.map((job) => <article key={job.company} className="grid gap-5 py-9 sm:grid-cols-[160px_1fr] sm:py-11"><p className="font-mono text-xs leading-5 text-muted-foreground">{job.period}</p><div><div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline"><div><h3 className="text-xl font-semibold tracking-tight">{job.role}</h3><p className="mt-1 text-xs text-muted-foreground">{job.location}</p></div><p className="text-sm text-primary">{job.company}</p></div><ul className="mt-5 space-y-3 text-sm leading-6 text-muted-foreground">{job.points.map((point) => <li key={point} className="flex gap-3"><span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-primary" />{point}</li>)}</ul></div></article>)}</div></motion.div></section>
+
+        <section id="education" className="section-shell scroll-mt-24 pb-24 lg:pb-32"><motion.div {...reveal} className="grid gap-4 lg:grid-cols-2"><article className="rounded-[2rem] border border-border bg-card p-7 shadow-sm sm:p-10"><GraduationCap className="h-7 w-7 text-primary" /><p className="mt-10 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Education</p><h2 className="mt-3 text-2xl font-semibold tracking-tight">Ghulam Ishaq Khan Institute of Engineering Sciences and Technology</h2><p className="mt-3 text-muted-foreground">Bachelor of Science in Computer Engineering</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 border-t border-border pt-6 text-sm text-muted-foreground"><span>Sep 2020 — May 2024</span><span>CGPA: 3.39 / 4.00</span><span>Dean’s Honor List · 2 times</span></div></article><article className="rounded-[2rem] border border-border bg-card p-7 shadow-sm sm:p-10"><Award className="h-7 w-7 text-primary" /><p className="mt-10 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Certificates</p><div className="mt-4 divide-y divide-border">{certificates.map((certificate) => <p key={certificate} className="py-5 text-lg font-medium leading-7">{certificate}</p>)}</div></article></motion.div></section>
+
+        <section id="skills" className="section-shell scroll-mt-24 pb-24 lg:pb-32"><motion.div {...reveal} className="rounded-[2rem] border border-border bg-card p-7 shadow-sm sm:p-10 lg:p-14"><div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end"><SectionLabel number="04" title="Toolkit" /><p className="max-w-sm text-sm leading-6 text-muted-foreground">A practical stack spanning product interfaces, backend systems, data and delivery.</p></div><div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">{skillGroups.map((group) => <div key={group.title} className="bg-background p-6 sm:p-7"><h3 className="mb-5 text-sm font-semibold">{group.title}</h3><div className="space-y-2.5 text-sm text-muted-foreground">{group.skills.map((skill) => <p key={skill}>{skill}</p>)}</div></div>)}</div></motion.div></section>
+
+        <section id="contact" className="section-shell scroll-mt-24 pb-10"><motion.div {...reveal} className="contact-panel"><div className="relative"><p className="mb-7 flex items-center gap-2 text-sm text-white/60"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Available for meaningful opportunities</p><h2 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">Have a product in mind? Let’s make it real.</h2><div className="mt-10 flex flex-wrap gap-3"><a href="mailto:hafsa.172001@gmail.com" className="button-light"><Mail className="h-4 w-4" /> Start a conversation</a><a href="https://www.linkedin.com/in/syedahafsaanis/" target="_blank" rel="noreferrer" className="button-dark-outline">Connect on LinkedIn <ArrowUpRight className="h-4 w-4" /></a></div></div><div className="relative mt-16 flex flex-col gap-3 border-t border-white/15 pt-7 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between"><span className="flex items-center gap-2"><MapPin className="h-4 w-4" /> Karachi, Pakistan</span><span>hafsa.172001@gmail.com</span></div></motion.div></section>
       </main>
-
-      {/* About section */}
-      <section id="about" aria-label="About" className="mt-50 scroll-mt-24">
-  <div className="mx-auto max-w-3xl px-6 py-12">
-    <h1 className="text-2xl md:text-5xl text-foreground text-center font-bold tracking-tight">
-      About
-    </h1>
-
-    <Card className="relative mt-6 p-10 w-full max-w-[1000px] mx-auto overflow-hidden">
-      <CardContent className="text-base md:text-lg leading-relaxed">I’m Syeda Hafsa Anis, a GIKI Computer Engineering graduate experienced in Web/Mobile, DevOps, and AI. I focus on building reliable features, tightening performance, and taking solutions from prototype to production. I work best in collaborative teams, keep feedback loops short, and stay curious—adopting new tools and practices when they make the product faster, safer, or more user-friendly.</CardContent>
-      {/* <CardFooter className="flex justify-between" /> */}
-      <BorderBeam duration={8} size={100} />
-    </Card>
-  </div>
-</section>
-
-
-      {/* Work Experience section */}
-      <div>
-        <section id="work-experience" aria-label="Work Experience">
-          <Timeline data={data} />
-        </section>
-      </div>
-
-      <div>
-        <section id="projects" aria-label="Work Experience">
-  <div className="m-20">
-    <h1 className="text-2xl md:text-5xl text-foreground text-center font-bold tracking-tight">
-      Projects
-    </h1>
-
-    {/* 3 horizontal cards (responsive) */}
-  <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-      <MagicCard className="h-full">
-        <div className="p-6 space-y-2">
-          <p className="font-medium text-base md:text-lg">IntelliDent</p>
-          <span className="text-base md:text-lg text-muted-foreground">Collaborated with Aga Khan University Hospital to curate a dataset of 1,000 orthopantomograms (panoramic dental X-rays). Using this dataset, built a compact web application that deploys machine learning and deep learning models to perform tooth-level classification and segmentation directly on OPGs, enabling fast, consistent analysis suitable for clinical workflows.</span>
-
-          {/* Technologies for IntelliDent */}
-          <div className="mt-3">
-            <p className="text-sm font-semibold text-foreground">Technologies</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Python</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Flask</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">React</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Next</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">TensorFlow</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Firebase</ShinyButton>
-            </div>
-          </div>
-        </div>
-      </MagicCard>
-
-      <MagicCard className="h-full">
-        <div className="p-6 space-y-2">
-          <p className="font-medium text-base md:text-lg">Book Blog</p>
-          <span className="text-base md:text-lg text-muted-foreground">Built a fully deployable MERN-stack blogging platform where users can create and publish personalized posts across a multi-page (3+) site. It features a fully responsive UI and secure authentication with signup/login for a seamless experience.</span>
-          <div className="mt-3">
-            <p className="text-sm font-semibold text-foreground">Technologies</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">JavaScript</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">MongoDB</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Expres</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">React</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Node</ShinyButton>
-            </div>
-            
-            {/* View source button (replace URL with actual repo) */}
-            <div className="mt-3">
-              <InteractiveHoverButton
-                className="text-xs md:text-sm"
-                onClick={() => window.open('https://github.com/hafsa12310/Book-Blog', '_blank')}
-              >
-                View source
-              </InteractiveHoverButton>
-            </div>
-          </div>
-        </div>
-      </MagicCard>
-
-      <MagicCard className="h-full">
-        <div className="p-6 space-y-2">
-          <p className="font-medium text-base md:text-lg">HR Salary Slip Portal</p>
-          <span className="text-base md:text-lg text-muted-foreground">The HR Salary Slip Portal provides secure authentication, bulk upload of employee data via Excel, and automatic PDF generation for individual payslips. HR can download all payslips and email them directly to the respective employees in one streamlined workflow.</span>
-          <div className="mt-3">
-            <p className="text-sm font-semibold text-foreground">Technologies</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Python</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Django</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">React</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">MongoDB</ShinyButton>
-            </div>
-
-            {/* View source button (replace URL with actual repo) */}
-            <div className="mt-3">
-              <InteractiveHoverButton
-                className="text-xs md:text-sm"
-                onClick={() => window.open('https://github.com/hafsa12310/HR-Salary-Slip-Portal', '_blank')}
-              >
-                View source
-              </InteractiveHoverButton>
-            </div>
-          </div>
-        </div>
-      </MagicCard>
-
-      <MagicCard className="h-full">
-        <div className="p-6 space-y-2">
-          <p className="font-medium text-base md:text-lg">Library Management System</p>
-          <span className="text-base md:text-lg text-muted-foreground">A secure, documented REST API for end-to-end library management: full CRUD for books and users, authenticated borrow/return workflows that update availability, and paginated listings with search by title, author, or genre. Includes error handling and input validation.</span>
-
-
-          <div className="mt-3">
-            <p className="text-sm font-semibold text-foreground">Technologies</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Express</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">PostgreSQL</ShinyButton>
-              <ShinyButton className="px-2 py-0.5 text-[10px] sm:px-2 sm:py-1 sm:text-xs">Sequelize</ShinyButton>
-            </div>
-
-
-            <div className="mt-3">
-              <InteractiveHoverButton
-                className="text-xs md:text-sm"
-                onClick={() => window.open('https://github.com/hafsa12310/Library-Management-System', '_blank')}
-              >
-                View source
-              </InteractiveHoverButton>
-            </div>
-          </div>
-        </div>
-      </MagicCard>
+      <footer className="section-shell flex flex-col gap-3 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Syeda Hafsa Anis</p></footer><ScrollToTop />
     </div>
-  </div>
-</section>
-
-      </div>
-
-      <div>
-        <section id="technologies" aria-label="Technologies" className="scroll-mt-24 py-12">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h1 className="text-2xl md:text-5xl text-foreground text-center font-bold tracking-tight">
-              Technologies
-            </h1>
-
-                  <div className="mt-0 flex items-center justify-center">
-      <IconCloud
-        icons={[
-          <SiJavascript key="js" size={100} color='#8a79ab' />,
-          <SiPython key="py" size={100} color='#8a79ab' />,
-          <SiTensorflow key="tf" size={100} color='#8a79ab' />,
-          <SiTypescript key="ts" size={100} color='#8a79ab' />,
-          <SiReact key="react" size={100} color='#8a79ab' />,
-          <SiDocker key="docker" size={100} color='#8a79ab' />,
-          <SiAmazon key="aws" size={100} color='#8a79ab' />,
-          <SiTailwindcss key="tailwind" size={100} color='#8a79ab' />,
-          <SiNestjs key="nest" size={100} color='#8a79ab' />,
-          <SiNextdotjs key="next" size={100} color='#8a79ab' />,
-          <SiHuggingface key="huggingface" size={100} color='#8a79ab' />,
-          <SiApachecassandra key="cassandra" size={100} color='#8a79ab' />,
-          <SiMariadb key="mariadb" size={100} color='#8a79ab' />,
-          <SiCplusplus key="cpp" size={100} color='#8a79ab' />,
-          <SiIntellijidea key="intellij" size={100} color='#8a79ab' />,
-        ]}
-        size={cloudSize}
-      />
-            </div>
-            
-            {/* Technologies button groups */}
-            <div className="mt-10 space-y-6">
-              {/** Row: Core Tools */}
-              <div className="grid grid-cols-12 items-center gap-6">
-                <div className="col-span-3 w-40 text-left text-sm font-semibold text-foreground">Core Tools</div>
-                <div className="col-span-9">
-                  <div className="flex flex-wrap gap-2 items-center justify-start">
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Git</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">JavaScript</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">TypeScript</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Python</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Dart</ShinyButton>
-                  </div>
-                </div>
-              </div>
-
-              {/** Row: Frontend */}
-              <div className="grid grid-cols-12 items-center gap-6">
-                <div className="col-span-3 w-40 text-left text-sm font-semibold text-foreground">Frontend</div>
-                <div className="col-span-9">
-                  <div className="flex flex-wrap gap-2 items-center justify-start">
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">React</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Next.js</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">TypeScript</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Tailwind</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Redux</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">HTML</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">CSS</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Flutter</ShinyButton>
-                  </div>
-                </div>
-              </div>
-
-              {/** Row: Backend */}
-              <div className="grid grid-cols-12 items-center gap-6">
-                <div className="col-span-3 w-40 text-left text-sm font-semibold text-foreground">Backend</div>
-                <div className="col-span-9">
-                  <div className="flex flex-wrap gap-2 items-center justify-start">
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Node</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Express</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Nest</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Flask</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Django</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">MongoDB</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">PostgreSQL</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">MariaDB</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Cassandra</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Firebase</ShinyButton>
-                  </div>
-                </div>
-              </div>
-
-              {/** Row: Other Tools */}
-              <div className="grid grid-cols-12 items-center gap-6">
-                <div className="col-span-3 w-40 text-left text-sm font-semibold text-foreground">Other Tools</div>
-                <div className="col-span-9">
-                  <div className="flex flex-wrap gap-2 items-center justify-start">
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Figma</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Vercel</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">GitHub</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">AWS</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Docker</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">TensorFlow</ShinyButton>
-                    <ShinyButton className="px-2 py-1 text-xs sm:px-3 sm:py-1 sm:text-sm">Postman</ShinyButton>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      {/* Contact section */}
-      <div>
-        <section id="contact" aria-label="Contact me" className="scroll-mt-24 py-12">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <h1 className="text-2xl md:text-5xl text-foreground text-center font-bold tracking-tight">
-              Get in Touch
-            </h1>
-
-            <div className="mt-8 md:mt-10">
-              <TypewriterEffect words={[{ text: "Let's" }, { text: "build" }, { text: "something" }, { text: "great" }, { text: "together" }]} />
-            </div>
-
-            {/* Follow-up contact sentence: LinkedIn link should be replaced with your real profile URL */}
-            <p className="mt-6 text-sm md:text-base text-muted-foreground">
-              Want to chat? Send me a direct message on{' '}
-              <a
-                href="https://www.linkedin.com/in/syedahafsaanis/" /* TODO: replace with your LinkedIn profile URL, e.g. https://www.linkedin.com/in/your-handle */
-                className="font-medium underline underline-offset-2 text-foreground"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                LinkedIn
-              </a>
-              {' '}or email me at{' '}
-              <a
-                href="mailto:hafsa.172001@gmail.com"
-                className="font-medium underline underline-offset-2 text-foreground"
-              >
-                hafsa.172001@gmail.com
-              </a>
-              . I’ll respond as soon as I can.
-            </p>
-          </div>
-        </section>
-      </div>
-
-      {/* Separator + Footer */}
-      <div className="mx-auto max-w-3xl px-6">
-        <div className="my-8 border-t border-muted-foreground/30" />
-        <footer className="pb-8 text-center">
-          <p className="text-sm text-muted-foreground">
-            Built with Next.js and TypeScript. Coded in VS Code. Copyright Ⓒ Syeda Hafsa Anis
-          </p>
-        </footer>
-      </div>
-      {/* Scroll-to-top button */}
-      <ScrollToTop />
-    </motion.div>
-  </div>
-  );
+  )
 }
 
-
+function SectionLabel({ number, title }: { number: string; title: string }) { return <div className="flex items-center gap-4"><span className="font-mono text-xs text-primary">{number}</span><h2 className="text-sm font-semibold uppercase tracking-[0.18em]">{title}</h2></div> }
+function Stat({ value, label }: { value: string; label: string }) { return <div><p className="text-lg font-semibold tracking-tight">{value}</p><p className="mt-1 text-xs text-muted-foreground">{label}</p></div> }
