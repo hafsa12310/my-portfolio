@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { ArrowDownRight, ArrowUpRight, Award, Download, Github, GraduationCap, Linkedin, Mail, MapPin, Sparkles } from "lucide-react"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/ui/scroll-to-top"
+import VisitorCounter from "@/components/visitor-counter"
 
 const experience = [
   { period: "Oct 2024 — Present", company: "Unikrew Solutions", location: "Karachi, Pakistan", role: "Full Stack Developer", points: ["Deploy and maintain production-grade applications with TypeScript, Node.js, NestJS, React and Next.js, building REST APIs, reusable components and database-driven workflows.", "Deliver complex digital onboarding flows spanning KYC, biometric verification, OTP, third-party APIs, retry handling and persistent server-driven workflow state.", "Use RabbitMQ for reliable asynchronous message processing across distributed application components."] },
@@ -69,7 +70,7 @@ export default function Home() {
 
         <section id="contact" className="section-shell scroll-mt-24 pb-10"><motion.div {...reveal} className="contact-panel"><div className="relative"><p className="mb-7 flex items-center gap-2 text-sm text-white/60"><span className="h-2 w-2 rounded-full bg-emerald-400" /> Available for meaningful opportunities</p><h2 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">Have a product in mind? Let’s make it real.</h2><div className="mt-10 flex flex-wrap gap-3"><a href="mailto:hafsa.172001@gmail.com" className="button-light"><Mail className="h-4 w-4" /> Start a conversation</a><a href="https://www.linkedin.com/in/syedahafsaanis/" target="_blank" rel="noreferrer" className="button-dark-outline">Connect on LinkedIn <ArrowUpRight className="h-4 w-4" /></a></div></div><div className="relative mt-16 flex flex-col gap-3 border-t border-white/15 pt-7 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between"><span className="flex items-center gap-2"><MapPin className="h-4 w-4" /> Karachi, Pakistan</span><span>hafsa.172001@gmail.com</span></div></motion.div></section>
       </main>
-      <footer className="section-shell flex flex-col gap-3 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Syeda Hafsa Anis</p></footer><ScrollToTop />
+      <footer className="section-shell flex flex-col gap-3 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} Syeda Hafsa Anis</p><VisitorCounter /></footer><ScrollToTop />
     </div>
   )
 }
